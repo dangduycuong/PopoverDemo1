@@ -23,6 +23,9 @@
                                 <connections>
                                     <segue destination="fCE-PX-a4g" kind="popoverPresentation" popoverAnchorView="8bC-Xf-vdC" id="T90-LW-tTI">
                                         <popoverArrowDirection key="popoverArrowDirection"/>
+                                        <popoverPassthroughViews>
+                                            <button reference="ITR-9Z-Rvv"/>
+                                        </popoverPassthroughViews>
                                     </segue>
                                 </connections>
                             </button>
@@ -43,16 +46,22 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="8PO-Xk-2Zc">
-                        <rightBarButtonItems>
-                            <barButtonItem title="Show" id="WH8-vK-v31">
-                                <connections>
-                                    <segue destination="H6i-L4-wt8" kind="popoverPresentation" popoverAnchorBarButtonItem="WH8-vK-v31" id="heN-Q7-WgA">
-                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                    </segue>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem title="passthrought work" id="Qza-yf-QfV"/>
-                        </rightBarButtonItems>
+                        <nil key="title"/>
+                        <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ITR-9Z-Rvv">
+                            <rect key="frame" x="164.5" y="7" width="46" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Button"/>
+                        </button>
+                        <barButtonItem key="rightBarButtonItem" title="Show" id="WH8-vK-v31">
+                            <connections>
+                                <segue destination="H6i-L4-wt8" kind="popoverPresentation" popoverAnchorBarButtonItem="WH8-vK-v31" id="heN-Q7-WgA">
+                                    <popoverArrowDirection key="popoverArrowDirection" up="YES"/>
+                                    <popoverPassthroughViews>
+                                        <button reference="ITR-9Z-Rvv"/>
+                                    </popoverPassthroughViews>
+                                </segue>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

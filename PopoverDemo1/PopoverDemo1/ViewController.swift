@@ -33,7 +33,7 @@ class ViewController: UIViewController, UIPopoverPresentationControllerDelegate 
 //    @IBAction func showButton(_ sender: UIButton) {
 //        //CGRect(origin: self.view.center, size: CGSize.zero)
 //        //CGRect(origin: self.view.CGPoint.init(x: 100, y: 200), size: CGSize.init(width: 250, height: 400))
-//        
+//        Anh Thắng đã sửa
 //    }
 
 }
