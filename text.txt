@@ -1,0 +1,3 @@
+Note:
+	- Để ViewController vào trung tâm màn hình: 
+		Show the Attributes inspector -> View Controller -> Layout: Chọn Adjust Scroll ViewController
