@@ -26,6 +26,29 @@ class DetailMealViewController: UIViewController {
         title = infoMeal?.strMeal
         strInstructionsLabel.text = ""
         strYoutubeLabel.text = ""
+        
+        
+        strYoutubeLabel.isUserInteractionEnabled = true
+        let tapgesture = UITapGestureRecognizer(target: self, action: #selector(tappedOnLabel(_ :)))
+        tapgesture.numberOfTapsRequired = 1
+        strYoutubeLabel.addGestureRecognizer(tapgesture)
+    }
+    
+    @objc func tappedOnLabel(_ gesture: UITapGestureRecognizer) {
+        if let strYoutube = detailMeal[0].strYoutube {
+            open(url: strYoutube)
+        }
+    }
+    
+    private func open(url: String, completed: (() -> Void)? = nil, error: (() -> Void)? = nil) {
+        if let url = URL(string: url),
+           UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:], completionHandler: { (success) in
+                completed?()
+            })
+        } else {
+            error?()
+        }
     }
     
     private func lookupFullMealDetails(by id: String?) {
