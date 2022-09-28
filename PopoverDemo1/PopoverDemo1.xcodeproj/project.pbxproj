@@ -16,13 +16,14 @@
 		CE04C43321F80DC500FEE6F1 /* PopoverDemo1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE04C43221F80DC500FEE6F1 /* PopoverDemo1Tests.swift */; };
 		D88276E48E3C5576E91DD951 /* Pods_PopoverDemo1Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95E9760AB8588ED3F440C016 /* Pods_PopoverDemo1Tests.framework */; };
 		FAC2008B28E2EA3B00C6EBF4 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC2008A28E2EA3B00C6EBF4 /* MasterViewController.swift */; };
-		FAC2008D28E2EA5B00C6EBF4 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC2008C28E2EA5B00C6EBF4 /* DetailViewController.swift */; };
+		FAC2008D28E2EA5B00C6EBF4 /* SelectFilterByVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC2008C28E2EA5B00C6EBF4 /* SelectFilterByVC.swift */; };
 		FAC2009028E2EFA600C6EBF4 /* Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC2008F28E2EFA600C6EBF4 /* Identifier.swift */; };
 		FAC2009528E2F04400C6EBF4 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC2009328E2F04400C6EBF4 /* CategoryCell.swift */; };
 		FAC2009628E2F04400C6EBF4 /* CategoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAC2009428E2F04400C6EBF4 /* CategoryCell.xib */; };
 		FAC2009A28E2F85F00C6EBF4 /* CategoryDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC2009828E2F85F00C6EBF4 /* CategoryDetailTableViewCell.swift */; };
 		FAC2009B28E2F85F00C6EBF4 /* CategoryDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAC2009928E2F85F00C6EBF4 /* CategoryDetailTableViewCell.xib */; };
 		FAC2009D28E2FD5E00C6EBF4 /* DetailMealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC2009C28E2FD5E00C6EBF4 /* DetailMealViewController.swift */; };
+		FAC2009F28E3E4D100C6EBF4 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC2009E28E3E4D100C6EBF4 /* String+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,13 +54,14 @@
 		CE04C43221F80DC500FEE6F1 /* PopoverDemo1Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverDemo1Tests.swift; sourceTree = "<group>"; };
 		CE04C43421F80DC500FEE6F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FAC2008A28E2EA3B00C6EBF4 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
-		FAC2008C28E2EA5B00C6EBF4 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		FAC2008C28E2EA5B00C6EBF4 /* SelectFilterByVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFilterByVC.swift; sourceTree = "<group>"; };
 		FAC2008F28E2EFA600C6EBF4 /* Identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifier.swift; sourceTree = "<group>"; };
 		FAC2009328E2F04400C6EBF4 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		FAC2009428E2F04400C6EBF4 /* CategoryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryCell.xib; sourceTree = "<group>"; };
 		FAC2009828E2F85F00C6EBF4 /* CategoryDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDetailTableViewCell.swift; sourceTree = "<group>"; };
 		FAC2009928E2F85F00C6EBF4 /* CategoryDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryDetailTableViewCell.xib; sourceTree = "<group>"; };
 		FAC2009C28E2FD5E00C6EBF4 /* DetailMealViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMealViewController.swift; sourceTree = "<group>"; };
+		FAC2009E28E3E4D100C6EBF4 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,7 +132,7 @@
 				CE04C41D21F80DC400FEE6F1 /* AppDelegate.swift */,
 				CE04C41F21F80DC400FEE6F1 /* ViewController.swift */,
 				FAC2008A28E2EA3B00C6EBF4 /* MasterViewController.swift */,
-				FAC2008C28E2EA5B00C6EBF4 /* DetailViewController.swift */,
+				FAC2008C28E2EA5B00C6EBF4 /* SelectFilterByVC.swift */,
 				FAC2009C28E2FD5E00C6EBF4 /* DetailMealViewController.swift */,
 				CE04C42121F80DC400FEE6F1 /* Main.storyboard */,
 				CE04C42421F80DC500FEE6F1 /* Assets.xcassets */,
@@ -153,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				FAC2008F28E2EFA600C6EBF4 /* Identifier.swift */,
+				FAC2009E28E3E4D100C6EBF4 /* String+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -355,12 +358,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE04C42021F80DC400FEE6F1 /* ViewController.swift in Sources */,
+				FAC2009F28E3E4D100C6EBF4 /* String+Extension.swift in Sources */,
 				FAC2009028E2EFA600C6EBF4 /* Identifier.swift in Sources */,
 				FAC2009D28E2FD5E00C6EBF4 /* DetailMealViewController.swift in Sources */,
 				FAC2009A28E2F85F00C6EBF4 /* CategoryDetailTableViewCell.swift in Sources */,
 				CE04C41E21F80DC400FEE6F1 /* AppDelegate.swift in Sources */,
 				FAC2008B28E2EA3B00C6EBF4 /* MasterViewController.swift in Sources */,
-				FAC2008D28E2EA5B00C6EBF4 /* DetailViewController.swift in Sources */,
+				FAC2008D28E2EA5B00C6EBF4 /* SelectFilterByVC.swift in Sources */,
 				FAC2009528E2F04400C6EBF4 /* CategoryCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

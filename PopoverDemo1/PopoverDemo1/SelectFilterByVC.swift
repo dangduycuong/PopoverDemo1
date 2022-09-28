@@ -14,15 +14,17 @@ enum ListBy {
     case ingredients
 }
 
-class DetailViewController: UIViewController {
+class SelectFilterByVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     var categoriesMeal = [Meal]()
     var selectCategory: ((_ category: String?) -> Void)?
     var filterByArea: ((_ area: String?) -> Void)?
     var filterByMainIngredient: ((_ ingredient: String?) -> Void)?
     var findBy = ListBy.categories
+    var filterList = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +37,7 @@ class DetailViewController: UIViewController {
         case .ingredients:
             getListAllIngredients()
         }
+        searchBar.isHidden = true
     }
     
     private func getAllCategories() {
@@ -65,7 +68,6 @@ class DetailViewController: UIViewController {
         let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if (error != nil) {
                 self.activityIndicatorView.stopAnimating()
-                print(error)
             }
             if let data = data {
                 data.printFormatedJSON()
@@ -73,8 +75,10 @@ class DetailViewController: UIViewController {
                     let json = try JSONDecoder().decode(CategoryMealModel.self, from: data)
                     if let meals = json.meals {
                         DispatchQueue.main.async {
+                            self.searchBar.isHidden = false
                             self.activityIndicatorView.stopAnimating()
                             self.categoriesMeal = meals
+                            self.filterList = meals.map { $0.strCategory ?? "" }
                             self.tableView.reloadData()
                         }
                     }
@@ -113,7 +117,6 @@ class DetailViewController: UIViewController {
         let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if (error != nil) {
                 self.activityIndicatorView.stopAnimating()
-                print(error)
             }
             if let data = data {
                 data.printFormatedJSON()
@@ -121,8 +124,10 @@ class DetailViewController: UIViewController {
                     let json = try JSONDecoder().decode(CategoryMealModel.self, from: data)
                     if let meals = json.meals {
                         DispatchQueue.main.async {
+                            self.searchBar.isHidden = false
                             self.activityIndicatorView.stopAnimating()
                             self.categoriesMeal = meals
+                            self.filterList = meals.map { $0.strArea ?? "" }
                             self.tableView.reloadData()
                         }
                     }
@@ -161,7 +166,6 @@ class DetailViewController: UIViewController {
         let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if (error != nil) {
                 self.activityIndicatorView.stopAnimating()
-                print(error)
             }
             if let data = data {
                 data.printFormatedJSON()
@@ -169,8 +173,10 @@ class DetailViewController: UIViewController {
                     let json = try JSONDecoder().decode(CategoryMealModel.self, from: data)
                     if let meals = json.meals {
                         DispatchQueue.main.async {
+                            self.searchBar.isHidden = false
                             self.activityIndicatorView.stopAnimating()
                             self.categoriesMeal = meals
+                            self.filterList = meals.map { $0.strIngredient ?? "" }
                             self.tableView.reloadData()
                         }
                     }
@@ -183,20 +189,20 @@ class DetailViewController: UIViewController {
     
 }
 
-extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
+extension SelectFilterByVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categoriesMeal.count
+        return filterList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(cellType: CategoryCell.self, forIndexPath: indexPath)
         switch findBy {
         case .categories:
-            cell.fillData(titleMeal: categoriesMeal[indexPath.row].strCategory)
+            cell.fillData(titleMeal: filterList[indexPath.row])
         case .area:
-            cell.fillData(titleMeal: categoriesMeal[indexPath.row].strArea)
+            cell.fillData(titleMeal: filterList[indexPath.row])
         case .ingredients:
-            cell.fillData(titleMeal: categoriesMeal[indexPath.row].strIngredient)
+            cell.fillData(titleMeal: filterList[indexPath.row])
         }
         let selectedView = UIView()
         selectedView.backgroundColor = .white
@@ -207,15 +213,63 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch findBy {
         case .area:
-            filterByArea?(categoriesMeal[indexPath.row].strArea)
+            filterByArea?(filterList[indexPath.row])
         case .categories:
-            selectCategory?(categoriesMeal[indexPath.row].strCategory)
+            selectCategory?(filterList[indexPath.row])
         case .ingredients:
-            filterByMainIngredient?(categoriesMeal[indexPath.row].strIngredient)
+            filterByMainIngredient?(filterList[indexPath.row])
         }
         dismiss(animated: true)
     }
     
+}
+
+extension SelectFilterByVC: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.count == 0 {
+            updateDataWhileClearSearchText()
+            return
+        }
+        switch findBy {
+        case .area:
+            let sourceList = categoriesMeal.map { $0.strArea ?? "" }
+            filterList = sourceList.filter { area in
+                if area.lowercased().unaccent().range(of: searchText.lowercased().unaccent()) != nil {
+                    return true
+                }
+                return false
+            }
+        case .categories:
+            let sourceList = categoriesMeal.map { $0.strCategory ?? "" }
+            filterList = sourceList.filter { area in
+                if area.lowercased().unaccent().range(of: searchText.lowercased().unaccent()) != nil {
+                    return true
+                }
+                return false
+            }
+        case .ingredients:
+            let sourceList = categoriesMeal.map { $0.strIngredient ?? "" }
+            filterList = sourceList.filter { area in
+                if area.lowercased().unaccent().range(of: searchText.lowercased().unaccent()) != nil {
+                    return true
+                }
+                return false
+            }
+        }
+        tableView.reloadData()
+    }
+    
+    private func updateDataWhileClearSearchText() {
+        switch findBy {
+        case .area:
+            filterList = categoriesMeal.map { $0.strArea ?? "" }
+        case .categories:
+            filterList = categoriesMeal.map { $0.strCategory ?? "" }
+        case .ingredients:
+            filterList = categoriesMeal.map { $0.strIngredient ?? "" }
+        }
+        tableView.reloadData()
+    }
 }
 
 

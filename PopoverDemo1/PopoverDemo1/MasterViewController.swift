@@ -12,15 +12,19 @@ class MasterViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet var rightBarButtonFilterItems: [UIBarButtonItem]!
     var detailCategory = [Meal]()
+    var filterMeal = [Meal]()
+    var findBy = ListBy.categories
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         tableView.registerCell(CategoryDetailTableViewCell.self)
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        self.searchBar.isHidden = true
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -34,7 +38,9 @@ class MasterViewController: UIViewController {
         return .none
     }
     
+    // MARK: Call API
     private func filterByCategory(category: String?) {
+        self.searchBar.isHidden = true
         activityIndicatorView.startAnimating()
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
@@ -62,7 +68,6 @@ class MasterViewController: UIViewController {
         let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if (error != nil) {
                 self.activityIndicatorView.stopAnimating()
-                print(error)
             }
             if let data = data {
                 data.printFormatedJSON()
@@ -70,8 +75,10 @@ class MasterViewController: UIViewController {
                     let json = try JSONDecoder().decode(DetailCategoryModel.self, from: data)
                     if let meals = json.meals {
                         DispatchQueue.main.async {
+                            self.searchBar.isHidden = false
                             self.activityIndicatorView.stopAnimating()
                             self.detailCategory = meals
+                            self.filterMeal = meals
                             self.tableView.reloadData()
                         }
                     }
@@ -83,6 +90,7 @@ class MasterViewController: UIViewController {
     }
     
     private func filterByArea(area: String?) {
+        self.searchBar.isHidden = true
         activityIndicatorView.startAnimating()
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
@@ -110,7 +118,6 @@ class MasterViewController: UIViewController {
         let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if (error != nil) {
                 self.activityIndicatorView.stopAnimating()
-                print(error)
             }
             if let data = data {
                 data.printFormatedJSON()
@@ -118,8 +125,10 @@ class MasterViewController: UIViewController {
                     let json = try JSONDecoder().decode(DetailCategoryModel.self, from: data)
                     if let meals = json.meals {
                         DispatchQueue.main.async {
+                            self.searchBar.isHidden = false
                             self.activityIndicatorView.stopAnimating()
                             self.detailCategory = meals
+                            self.filterMeal = meals
                             self.tableView.reloadData()
                         }
                     }
@@ -131,6 +140,7 @@ class MasterViewController: UIViewController {
     }
     
     private func filterByMainIngredient(ingredient: String?) {
+        self.searchBar.isHidden = true
         activityIndicatorView.startAnimating()
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
@@ -158,7 +168,6 @@ class MasterViewController: UIViewController {
         let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if (error != nil) {
                 self.activityIndicatorView.stopAnimating()
-                print(error)
             }
             if let data = data {
                 data.printFormatedJSON()
@@ -166,8 +175,10 @@ class MasterViewController: UIViewController {
                     let json = try JSONDecoder().decode(DetailCategoryModel.self, from: data)
                     if let meals = json.meals {
                         DispatchQueue.main.async {
+                            self.searchBar.isHidden = false
                             self.activityIndicatorView.stopAnimating()
                             self.detailCategory = meals
+                            self.filterMeal = meals
                             self.tableView.reloadData()
                         }
                     }
@@ -179,7 +190,8 @@ class MasterViewController: UIViewController {
     }
     
     @IBAction func showPop(_ sender: UIBarButtonItem) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
+        findBy = .categories
+        let vc = storyboard?.instantiateViewController(withIdentifier: "SelectFilterByVC") as! SelectFilterByVC
         vc.modalPresentationStyle = .popover
         let popover: UIPopoverPresentationController = vc.popoverPresentationController!
         popover.barButtonItem = sender
@@ -200,7 +212,8 @@ class MasterViewController: UIViewController {
     }
     
     @IBAction func showListByArea(_ sender: UIBarButtonItem) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
+        findBy = .area
+        let vc = storyboard?.instantiateViewController(withIdentifier: "SelectFilterByVC") as! SelectFilterByVC
         vc.modalPresentationStyle = .popover
         let popover: UIPopoverPresentationController = vc.popoverPresentationController!
         popover.barButtonItem = sender
@@ -221,7 +234,8 @@ class MasterViewController: UIViewController {
     }
     
     @IBAction func showListByMainIngredient(_ sender: UIBarButtonItem) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
+        findBy = .ingredients
+        let vc = storyboard?.instantiateViewController(withIdentifier: "SelectFilterByVC") as! SelectFilterByVC
         vc.modalPresentationStyle = .popover
         let popover: UIPopoverPresentationController = vc.popoverPresentationController!
         popover.barButtonItem = sender
@@ -250,12 +264,12 @@ extension MasterViewController: UIPopoverPresentationControllerDelegate {
 
 extension MasterViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return detailCategory.count
+        return filterMeal.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(cellType: CategoryDetailTableViewCell.self, forIndexPath: indexPath)
-        cell.fillData(category: detailCategory[indexPath.row])
+        cell.fillData(category: filterMeal[indexPath.row])
         let selectedView = UIView()
         selectedView.backgroundColor = .white
         cell.selectedBackgroundView = selectedView
@@ -264,12 +278,30 @@ extension MasterViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "DetailMealViewController") as! DetailMealViewController
-        vc.infoMeal = detailCategory[indexPath.row]
+        vc.infoMeal = filterMeal[indexPath.row]
         navigationController?.pushViewController(vc, animated: true)
     }
     
 }
 
+extension MasterViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.count == 0 {
+            filterMeal = detailCategory
+            tableView.reloadData()
+            return
+        }
+        filterMeal = detailCategory.filter { (meal: Meal) in
+            if let strMeal = meal.strMeal?.lowercased().unaccent() {
+                if strMeal.range(of: searchText.lowercased().unaccent()) != nil {
+                    return true
+                }
+            }
+            return false
+        }
+        tableView.reloadData()
+    }
+}
 
 // This file was generated from JSON Schema using quicktype, do not modify it directly.
 // To parse the JSON, add this file to your project and do:
@@ -281,7 +313,7 @@ import Foundation
 // MARK: - DetailCategoryModel
 class DetailCategoryModel: Codable {
     let meals: [Meal]?
-
+    
     init(meals: [Meal]?) {
         self.meals = meals
     }

@@ -149,8 +149,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ejG-jJ-KPg">
-                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ejG-jJ-KPg">
+                                <rect key="frame" x="0.0" y="111" width="375" height="556"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <connections>
                                     <outlet property="dataSource" destination="yHv-Zd-igy" id="Wbk-fl-EFr"/>
@@ -160,16 +160,26 @@
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="SVZ-CY-zjt">
                                 <rect key="frame" x="169" y="315" width="37" height="37"/>
                             </activityIndicatorView>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="R4z-U0-Yko">
+                                <rect key="frame" x="0.0" y="52" width="375" height="51"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="yHv-Zd-igy" id="qHE-vv-h0b"/>
+                                </connections>
+                            </searchBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="f4D-12-Fxo"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="f4D-12-Fxo" firstAttribute="trailing" secondItem="ejG-jJ-KPg" secondAttribute="trailing" id="1XN-rT-dcR"/>
                             <constraint firstItem="SVZ-CY-zjt" firstAttribute="centerX" secondItem="N8l-dV-86v" secondAttribute="centerX" id="AIa-HE-u92"/>
+                            <constraint firstItem="ejG-jJ-KPg" firstAttribute="top" secondItem="R4z-U0-Yko" secondAttribute="bottom" constant="8" id="Am8-rn-5Px"/>
+                            <constraint firstItem="R4z-U0-Yko" firstAttribute="leading" secondItem="f4D-12-Fxo" secondAttribute="leading" id="Fef-Fu-4vk"/>
                             <constraint firstItem="SVZ-CY-zjt" firstAttribute="centerY" secondItem="N8l-dV-86v" secondAttribute="centerY" id="HLq-ne-zQu"/>
+                            <constraint firstItem="R4z-U0-Yko" firstAttribute="trailing" secondItem="f4D-12-Fxo" secondAttribute="trailing" id="MgI-O2-jFN"/>
                             <constraint firstItem="f4D-12-Fxo" firstAttribute="bottom" secondItem="ejG-jJ-KPg" secondAttribute="bottom" id="NeT-AG-3df"/>
                             <constraint firstItem="ejG-jJ-KPg" firstAttribute="leading" secondItem="f4D-12-Fxo" secondAttribute="leading" id="WTC-5S-lPw"/>
-                            <constraint firstItem="ejG-jJ-KPg" firstAttribute="top" secondItem="f4D-12-Fxo" secondAttribute="top" id="lRM-EO-2SK"/>
+                            <constraint firstItem="R4z-U0-Yko" firstAttribute="top" secondItem="f4D-12-Fxo" secondAttribute="top" constant="8" id="ftq-Bc-6uq"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="DMs-b8-J8i">
@@ -193,6 +203,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="activityIndicatorView" destination="SVZ-CY-zjt" id="r66-BJ-YGh"/>
+                        <outlet property="searchBar" destination="R4z-U0-Yko" id="zSW-MQ-dzF"/>
                         <outlet property="tableView" destination="ejG-jJ-KPg" id="my5-2a-ZwJ"/>
                         <outletCollection property="rightBarButtonFilterItems" destination="mcv-ON-bLd" collectionClass="NSMutableArray" id="zWa-Lq-awm"/>
                         <outletCollection property="rightBarButtonFilterItems" destination="uFP-ry-QIF" collectionClass="NSMutableArray" id="m3S-rc-xmX"/>
@@ -203,16 +214,23 @@
             </objects>
             <point key="canvasLocation" x="2792.8000000000002" y="1308.3958020989505"/>
         </scene>
-        <!--Detail View Controller-->
+        <!--Select Filter ByVC-->
         <scene sceneID="J3t-c0-jFa">
             <objects>
-                <viewController storyboardIdentifier="DetailViewController" id="RC7-rX-QAW" customClass="DetailViewController" customModule="PopoverDemo1" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SelectFilterByVC" id="RC7-rX-QAW" customClass="SelectFilterByVC" customModule="PopoverDemo1" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gEO-dA-ld9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="sfM-u8-QxP">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="51"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="RC7-rX-QAW" id="D5D-fF-1q9"/>
+                                </connections>
+                            </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="y5b-fM-8jF">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="59" width="375" height="608"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <connections>
                                     <outlet property="dataSource" destination="RC7-rX-QAW" id="jNL-jV-FBz"/>
@@ -227,15 +245,19 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="ml0-pX-NbA" firstAttribute="centerY" secondItem="gEO-dA-ld9" secondAttribute="centerY" id="5NH-yE-a7A"/>
+                            <constraint firstItem="sfM-u8-QxP" firstAttribute="leading" secondItem="p2l-27-xPb" secondAttribute="leading" id="Asa-3Q-ldL"/>
                             <constraint firstItem="p2l-27-xPb" firstAttribute="trailing" secondItem="y5b-fM-8jF" secondAttribute="trailing" id="WIT-vE-hAQ"/>
                             <constraint firstItem="y5b-fM-8jF" firstAttribute="leading" secondItem="p2l-27-xPb" secondAttribute="leading" id="Z8l-wf-JPs"/>
-                            <constraint firstItem="y5b-fM-8jF" firstAttribute="top" secondItem="p2l-27-xPb" secondAttribute="top" id="dNp-k0-dAN"/>
+                            <constraint firstItem="sfM-u8-QxP" firstAttribute="trailing" secondItem="p2l-27-xPb" secondAttribute="trailing" id="ZqW-0I-yte"/>
+                            <constraint firstItem="y5b-fM-8jF" firstAttribute="top" secondItem="sfM-u8-QxP" secondAttribute="bottom" constant="8" id="aTg-aZ-zWy"/>
                             <constraint firstItem="ml0-pX-NbA" firstAttribute="centerX" secondItem="gEO-dA-ld9" secondAttribute="centerX" id="g0f-gH-CUa"/>
+                            <constraint firstItem="sfM-u8-QxP" firstAttribute="top" secondItem="p2l-27-xPb" secondAttribute="top" id="pdF-ij-RCu"/>
                             <constraint firstItem="p2l-27-xPb" firstAttribute="bottom" secondItem="y5b-fM-8jF" secondAttribute="bottom" id="rAf-dP-Fn7"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="activityIndicatorView" destination="ml0-pX-NbA" id="4F1-oW-fLt"/>
+                        <outlet property="searchBar" destination="sfM-u8-QxP" id="wlp-ir-bIA"/>
                         <outlet property="tableView" destination="y5b-fM-8jF" id="6ej-qI-9p7"/>
                     </connections>
                 </viewController>
